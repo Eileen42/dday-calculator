@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D-Day 계산기 - 디데이 계산, 날짜 계산기</title>
+    <meta name="description" content="수능, 입시, 결혼기념일 등 중요한 날까지 남은 일수를 계산해보세요. 무료 디데이 계산기">
+    <meta name="keywords" content="디데이 계산기, D-day 계산기, 날짜 계산, 남은 일수, 수능 디데이">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="D-Day 계산기">
+    <meta property="og:description" content="중요한 날까지 남은 일수를 간편하게 계산하세요">
+    <meta property="og:type" content="website">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.95em;
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+        
+        input[type="text"],
+        input[type="date"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .result {
+            margin-top: 30px;
+            padding: 30px;
+            background: linear-gradient(135deg, #f6f8fb 0%, #e9ecef 100%);
+            border-radius: 15px;
+            text-align: center;
+            display: none;
+        }
+        
+        .result.show {
+            display: block;
+            animation: slideUp 0.5s ease;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .result-title {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .result-number {
+            font-size: 4em;
+            font-weight: 700;
+            color: #667eea;
+            margin: 10px 0;
+        }
+        
+        .result-text {
+            font-size: 1.3em;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .result-detail {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #ddd;
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+        
+        .examples {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .examples h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .example-item {
+            padding: 10px;
+            margin: 8px 0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9em;
+        }
+        
+        .example-item:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #999;
+            font-size: 0.85em;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 1.6em;
+            }
+            
+            .result-number {
+                font-size: 3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📅 D-Day 계산기</h1>
+        <p class="subtitle">중요한 날까지 남은 일수를 계산해보세요</p>
+        
+        <div class="input-group">
+            <label for="eventName">이벤트 이름</label>
+            <input type="text" id="eventName" placeholder="예: 수능, 결혼기념일, 취업" value="목표 날짜">
+        </div>
+        
+        <div class="input-group">
+            <label for="targetDate">목표 날짜</label>
+            <input type="date" id="targetDate" required>
+        </div>
+        
+        <button class="btn" onclick="calculateDday()">D-Day 계산하기</button>
+        
+        <div class="result" id="result">
+            <div class="result-title" id="eventTitle"></div>
+            <div class="result-number" id="ddayNumber"></div>
+            <div class="result-text" id="ddayText"></div>
+            <div class="result-detail" id="detailInfo"></div>
+        </div>
+        
+        <div class="examples">
+            <h3>💡 자주 찾는 D-Day</h3>
+            <div class="example-item" onclick="setExample('2025년 수능', '2025-11-13')">
+                📚 2025년 수능 (11월 13일)
+            </div>
+            <div class="example-item" onclick="setExample('2025년 설날', '2025-01-29')">
+                🎉 2025년 설날 (1월 29일)
+            </div>
+            <div class="example-item" onclick="setExample('크리스마스', '2025-12-25')">
+                🎄 2025년 크리스마스 (12월 25일)
+            </div>
+            <div class="example-item" onclick="setExample('신년', '2026-01-01')">
+                🎊 2026년 새해 (1월 1일)
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2024 D-Day 계산기. 모든 계산 결과는 참고용입니다.</p>
+        </footer>
+    </div>
+
+    <script>
+        // 오늘 날짜를 기본값으로 설정
+        window.onload = function() {
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            
+            const year = tomorrow.getFullYear();
+            const month = String(tomorrow.getMonth() + 1).padStart(2, '0');
+            const day = String(tomorrow.getDate()).padStart(2, '0');
+            
+            document.getElementById('targetDate').value = `${year}-${month}-${day}`;
+            document.getElementById('targetDate').min = `${year}-${month}-${day}`;
+        };
+        
+        function calculateDday() {
+            const eventName = document.getElementById('eventName').value || '목표 날짜';
+            const targetDate = document.getElementById('targetDate').value;
+            
+            if (!targetDate) {
+                alert('날짜를 선택해주세요!');
+                return;
+            }
+            
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            const target = new Date(targetDate);
+            target.setHours(0, 0, 0, 0);
+            
+            const diffTime = target - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            // 결과 표시
+            const resultDiv = document.getElementById('result');
+            const eventTitle = document.getElementById('eventTitle');
+            const ddayNumber = document.getElementById('ddayNumber');
+            const ddayText = document.getElementById('ddayText');
+            const detailInfo = document.getElementById('detailInfo');
+            
+            eventTitle.textContent = `"${eventName}"까지`;
+            
+            if (diffDays > 0) {
+                ddayNumber.textContent = `D-${diffDays}`;
+                ddayText.textContent = `${diffDays}일 남았습니다`;
+                ddayNumber.style.color = '#667eea';
+            } else if (diffDays === 0) {
+                ddayNumber.textContent = 'D-Day';
+                ddayText.textContent = '바로 오늘입니다! 🎉';
+                ddayNumber.style.color = '#e74c3c';
+            } else {
+                ddayNumber.textContent = `D+${Math.abs(diffDays)}`;
+                ddayText.textContent = `${Math.abs(diffDays)}일 지났습니다`;
+                ddayNumber.style.color = '#95a5a6';
+            }
+            
+            // 상세 정보
+            const weeks = Math.floor(Math.abs(diffDays) / 7);
+            const months = Math.floor(Math.abs(diffDays) / 30);
+            const targetDateFormatted = target.toLocaleDateString('ko-KR', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                weekday: 'long'
+            });
+            
+            let detailText = `📆 ${targetDateFormatted}<br>`;
+            if (diffDays > 0) {
+                detailText += `⏱️ 약 ${weeks}주 (${months}개월)<br>`;
+                detailText += `⏰ ${diffDays * 24}시간 / ${diffDays * 24 * 60}분`;
+            }
+            
+            detailInfo.innerHTML = detailText;
+            
+            resultDiv.classList.add('show');
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        
+        function setExample(name, date) {
+            document.getElementById('eventName').value = name;
+            document.getElementById('targetDate').value = date;
+            calculateDday();
+        }
+        
+        // Enter 키로 계산
+        document.getElementById('targetDate').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calculateDday();
+            }
+        });
+        
+        document.getElementById('eventName').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calculateDday();
+            }
+        });
+    </script>
+</body>
+</html>
