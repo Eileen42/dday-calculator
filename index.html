@@ -12,6 +12,10 @@
     <meta property="og:description" content="중요한 날까지 남은 일수를 간편하게 계산하세요">
     <meta property="og:type" content="website">
     
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4907584103511840"
+     crossorigin="anonymous"></script>
+    
     <style>
         * {
             margin: 0;
@@ -23,10 +27,43 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            padding: 20px;
+        }
+        
+        /* 전체 레이아웃: 3단 구조 */
+        .page-wrapper {
             display: flex;
             justify-content: center;
+            align-items: flex-start;
+            gap: 20px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        
+        /* 광고 컬럼 */
+        .ad-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            min-width: 300px;
+        }
+        
+        /* 광고 개별 스타일 */
+        .ad-unit {
+            background: white;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            min-height: 250px;
+            display: flex;
             align-items: center;
-            padding: 20px;
+            justify-content: center;
+        }
+        
+        /* 메인 컨텐츠 (계산기) */
+        .main-content {
+            flex: 1;
+            max-width: 600px;
         }
         
         .container {
@@ -34,7 +71,6 @@
             border-radius: 20px;
             padding: 40px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 500px;
             width: 100%;
         }
         
@@ -192,6 +228,34 @@
             font-size: 0.85em;
         }
         
+        /* 모바일 광고 (상단/하단) */
+        .mobile-ad {
+            display: none;
+            background: white;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 20px auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            max-width: 600px;
+        }
+        
+        /* 반응형: 타블릿 이하 */
+        @media (max-width: 1200px) {
+            .ad-column {
+                display: none !important;
+            }
+            
+            .mobile-ad {
+                display: block;
+            }
+            
+            .page-wrapper {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        /* 반응형: 모바일 */
         @media (max-width: 600px) {
             .container {
                 padding: 25px;
@@ -208,51 +272,140 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>📅 D-Day 계산기</h1>
-        <p class="subtitle">중요한 날까지 남은 일수를 계산해보세요</p>
-        
-        <div class="input-group">
-            <label for="eventName">이벤트 이름</label>
-            <input type="text" id="eventName" placeholder="예: 수능, 결혼기념일, 취업" value="목표 날짜">
-        </div>
-        
-        <div class="input-group">
-            <label for="targetDate">목표 날짜</label>
-            <input type="date" id="targetDate" required>
-        </div>
-        
-        <button class="btn" onclick="calculateDday()">D-Day 계산하기</button>
-        
-        <div class="result" id="result">
-            <div class="result-title" id="eventTitle"></div>
-            <div class="result-number" id="ddayNumber"></div>
-            <div class="result-text" id="ddayText"></div>
-            <div class="result-detail" id="detailInfo"></div>
-        </div>
-        
-        <div class="examples">
-            <h3>💡 자주 찾는 D-Day</h3>
-            <div class="example-item" onclick="setExample('2025년 수능', '2025-11-13')">
-                📚 2025년 수능 (11월 13일)
+    <!-- 모바일 상단 광고 -->
+    <div class="mobile-ad">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-4907584103511840"
+             data-ad-slot="3961220871"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </div>
+
+    <div class="page-wrapper">
+        <!-- 왼쪽 광고 컬럼 -->
+        <div class="ad-column">
+            <!-- 광고 1 -->
+            <div class="ad-unit">
+                <ins class="adsbygoogle"
+                     style="display:block;width:300px;height:250px"
+                     data-ad-client="ca-pub-4907584103511840"
+                     data-ad-slot="3961220871"></ins>
             </div>
-            <div class="example-item" onclick="setExample('2025년 설날', '2025-01-29')">
-                🎉 2025년 설날 (1월 29일)
+            
+            <!-- 광고 2 -->
+            <div class="ad-unit">
+                <ins class="adsbygoogle"
+                     style="display:block;width:300px;height:250px"
+                     data-ad-client="ca-pub-4907584103511840"
+                     data-ad-slot="3961220871"></ins>
             </div>
-            <div class="example-item" onclick="setExample('크리스마스', '2025-12-25')">
-                🎄 2025년 크리스마스 (12월 25일)
-            </div>
-            <div class="example-item" onclick="setExample('신년', '2026-01-01')">
-                🎊 2026년 새해 (1월 1일)
+            
+            <!-- 광고 3 -->
+            <div class="ad-unit">
+                <ins class="adsbygoogle"
+                     style="display:block;width:300px;height:250px"
+                     data-ad-client="ca-pub-4907584103511840"
+                     data-ad-slot="3961220871"></ins>
             </div>
         </div>
-        
-        <footer>
-            <p>© 2024 D-Day 계산기. 모든 계산 결과는 참고용입니다.</p>
-        </footer>
+
+        <!-- 메인 컨텐츠 (계산기) -->
+        <div class="main-content">
+            <div class="container">
+                <h1>📅 D-Day 계산기</h1>
+                <p class="subtitle">중요한 날까지 남은 일수를 계산해보세요</p>
+                
+                <div class="input-group">
+                    <label for="eventName">이벤트 이름</label>
+                    <input type="text" id="eventName" placeholder="예: 수능, 결혼기념일, 취업" value="목표 날짜">
+                </div>
+                
+                <div class="input-group">
+                    <label for="targetDate">목표 날짜</label>
+                    <input type="date" id="targetDate" required>
+                </div>
+                
+                <button class="btn" onclick="calculateDday()">D-Day 계산하기</button>
+                
+                <div class="result" id="result">
+                    <div class="result-title" id="eventTitle"></div>
+                    <div class="result-number" id="ddayNumber"></div>
+                    <div class="result-text" id="ddayText"></div>
+                    <div class="result-detail" id="detailInfo"></div>
+                </div>
+                
+                <div class="examples">
+                    <h3>💡 자주 찾는 D-Day</h3>
+                    <div class="example-item" onclick="setExample('2025년 수능', '2025-11-13')">
+                        📚 2025년 수능 (11월 13일)
+                    </div>
+                    <div class="example-item" onclick="setExample('2025년 설날', '2025-01-29')">
+                        🎉 2025년 설날 (1월 29일)
+                    </div>
+                    <div class="example-item" onclick="setExample('크리스마스', '2025-12-25')">
+                        🎄 2025년 크리스마스 (12월 25일)
+                    </div>
+                    <div class="example-item" onclick="setExample('신년', '2026-01-01')">
+                        🎊 2026년 새해 (1월 1일)
+                    </div>
+                </div>
+                
+                <footer>
+                    <p>© 2024 D-Day 계산기. 모든 계산 결과는 참고용입니다.</p>
+                </footer>
+            </div>
+        </div>
+
+        <!-- 오른쪽 광고 컬럼 -->
+        <div class="ad-column">
+            <!-- 광고 4 -->
+            <div class="ad-unit">
+                <ins class="adsbygoogle"
+                     style="display:block;width:300px;height:250px"
+                     data-ad-client="ca-pub-4907584103511840"
+                     data-ad-slot="3961220871"></ins>
+            </div>
+            
+            <!-- 광고 5 -->
+            <div class="ad-unit">
+                <ins class="adsbygoogle"
+                     style="display:block;width:300px;height:250px"
+                     data-ad-client="ca-pub-4907584103511840"
+                     data-ad-slot="3961220871"></ins>
+            </div>
+            
+            <!-- 광고 6 -->
+            <div class="ad-unit">
+                <ins class="adsbygoogle"
+                     style="display:block;width:300px;height:250px"
+                     data-ad-client="ca-pub-4907584103511840"
+                     data-ad-slot="3961220871"></ins>
+            </div>
+        </div>
+    </div>
+
+    <!-- 모바일 하단 광고 -->
+    <div class="mobile-ad">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-4907584103511840"
+             data-ad-slot="3961220871"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
     </div>
 
     <script>
+        // 광고 로드
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        
         // 오늘 날짜를 기본값으로 설정
         window.onload = function() {
             const today = new Date();
